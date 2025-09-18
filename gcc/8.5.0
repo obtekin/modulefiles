@@ -1,0 +1,33 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+puts stderr " "
+puts stderr "This module loads the GNU compiler collection"
+puts stderr " "
+puts stderr "See the man pages for gcc, g++, and gfortran for detailed information"
+puts stderr "on available compiler options and command-line syntax."
+puts stderr " "
+
+puts stderr "\nVersion 8.5.0\n"
+
+}
+module-whatis "Name: GNU Compiler Collection"
+module-whatis "Version: 8.5.0"
+module-whatis "Category: compiler, runtime support"
+module-whatis "Description: GNU Compiler Family (C/C++/Fortran for x86_64)"
+module-whatis "URL: http://gcc.gnu.org/"
+
+set     category                    compiler
+set     package                     gcc
+set     version                     8.5.0
+set     root                        /opt/ohpc/pub/$category/$package/$version
+
+prepend-path    PATH                $root/bin/
+prepend-path    MANPATH             $root/share/man
+prepend-path    INCLUDE             $root/include
+prepend-path    LD_LIBRARY_PATH     $root/lib64
+prepend-path    MODULEPATH          /opt/ohpc/pub/moduledeps/gnu8-openmpi5
+
+family "compiler"
+
