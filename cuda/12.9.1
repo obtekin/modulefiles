@@ -1,0 +1,23 @@
+#%Module1.0
+
+proc ModulesHelp { } {
+  puts stderr "Sets CUDA 12.9.1 environment variables."
+}
+
+module-whatis "CUDA 12.9.1 Environment Module"
+
+# for Tcl script use only
+set     sharedir        /opt/ohpc/pub
+set     category        compiler
+set     package         cuda
+set     version         12.9.1
+set     root            $sharedir/$category/$package/$version
+conflict        cuda            cuda
+
+setenv          CUDA_HOME       $root
+
+prepend-path    PATH            $root/bin
+prepend-path    LD_LIBRARY_PATH $root/lib
+prepend-path    CPATH           $root/include
+prepend-path    LD_LIBRARY_PATH $root/lib64:$root/targets/x86_64-linux/lib
+prepend-path    LIBRARY_PATH    $root/lib64
