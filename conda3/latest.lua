@@ -40,7 +40,7 @@ if (mode() == "load") then
 
     -- Disable auto_activate if ~/.conda.rc is missing
     if (not isFile(condarc)) then
-        execute{cmd=conda .. " config --set auto_activate_base false", modeA={"load"}}
+        execute{cmd=conda .. " config --set auto_activate false", modeA={"load"}}
     end
 
     -- Initialize conda environment properly
