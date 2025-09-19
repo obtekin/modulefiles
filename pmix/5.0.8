@@ -1,0 +1,24 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+    puts stderr "This module loads the pmix library."
+}
+
+module-whatis "Name: pmix"
+module-whatis "Version: 5.0.8"
+
+set             version              5.0.8
+set             package              pmix
+set             category             mpi
+set             sharedir             /opt/ohpc/pub
+set             root                 $sharedir/$category/$package/$version/
+
+prepend-path    PATH                $root/bin
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    MANPATH             $root/share/man
+prepend-path    INCLUDE             $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+
+setenv          PMIX_DIR        $root
+setenv          PMIX_LIB        $root/lib
+setenv          PMIX_INC        $root/include
