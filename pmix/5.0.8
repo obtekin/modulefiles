@@ -7,10 +7,11 @@ proc ModulesHelp { } {
 module-whatis "Name: pmix"
 module-whatis "Version: 5.0.8"
 
-set             version              5.0.8
-set             package              pmix
-set             category             mpi
 set             sharedir             /opt/ohpc/pub
+set             category             mpi
+set             package              pmix
+set             version              5.0.8
+
 set             root                 $sharedir/$category/$package/$version/
 
 prepend-path    PATH                $root/bin
