@@ -1,0 +1,24 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+        puts stderr " "
+        puts stderr "This module loads ffmpeg 6.0"
+        puts stderr "\nVersion 6.1.2\n"
+
+}
+module-whatis "Name: ffmeg"
+module-whatis "Version: 6.1.2"
+module-whatis "Category: Application"
+module-whatis "Description: leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play "
+module-whatis "URL https://ffmpeg.org/about.html"
+
+set     package           ffmpeg
+set     version           6.1.2
+set     category          apps
+set     root              /opt/ohpc/pub/$category/$package/$version
+
+prepend-path     PATH                $root/bin
+prepend-path     LD_LIBRARY_PATH     $root/lib
+prepend-path     CPATH               $root/include
+prepend-path     MANPATH             $root/share/man:$root/share/ffmpeg
