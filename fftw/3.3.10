@@ -1,0 +1,29 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+        puts stderr " "
+        puts stderr "fftw 3.3.10"
+        puts stderr "\nVersion 3.3.10\n"
+
+}
+module-whatis "Name: fftw"
+module-whatis "Version: 3.3.10"
+module-whatis "Category: library"
+module-whatis "Description: FFTW is a C subroutine library for computing the discrete Fourier transform."
+module-whatis "URL https://www.fftw.org/index.html"
+
+set     package         fftw
+set     version         3.3.10
+set     root            /opt/ohpc/pub/libs/$package/$version
+
+prepend-path    PATH                $root/bin
+prepend-path    MANPATH             $root/share/man
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    CPATH               $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+
+prepend-path    FFTW_HOME           $root
+prepend-path    FFTW_ROOT           $root
+prepend-path    FFTW_LIB            $root/lib
+prepend-path    FFTW_INCLUDE        $root/include
