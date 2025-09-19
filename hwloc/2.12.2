@@ -1,0 +1,37 @@
+#%Module1.0#####################################################################
+##
+## hwloc 2.12.2 modulefile
+##
+
+proc ModulesHelp { } {
+    puts stderr ""
+    puts stderr "This module loads the hwloc utility environment"
+    puts stderr "Version 2.12.2"
+}
+
+module-whatis "Name: hwloc"
+module-whatis "Version: 2.12.2"
+module-whatis "Category: Hardware Locality"
+module-whatis "Description: Portable Hardware Locality (hwloc) library"
+module-whatis "URL: https://www.open-mpi.org/projects/hwloc/"
+
+# Define variables
+set         version         2.12.2
+set         package         hwloc
+set         category        libs
+set         sharedir        /opt/ohpc/pub
+set         root            $sharedir/$category/$package/$version
+
+# Update environment paths
+prepend-path    PATH                $root/bin
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    LIBRARY_PATH        $root/lib
+prepend-path    CPATH               $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+prepend-path    MANPATH             $root/man
+
+# Set environment variables
+setenv          HWLOC_DIR           $root
+setenv          HWLOC_BIN           $root/bin
+setenv          HWLOC_INC           $root/include
+setenv          HWLOC_LIB           $root/lib
