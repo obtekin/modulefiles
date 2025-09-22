@@ -1,0 +1,27 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+        puts stderr " "
+        puts stderr "ucx 1.19.0"
+        puts stderr "\nVersion 1.19.0\n"
+
+}
+module-whatis "Name: ucx"
+module-whatis "Version: 1.19.0"
+module-whatis "Category: Application"
+module-whatis "Description: Unified Communication - X Framework (UCX) is a new acceleration library."
+module-whatis "URL https://github.com/openucx/ucx/"
+
+set     sharedir        /opt/ohpc/pub
+set     category        mpi
+set     package         ucx
+set     version         1.19.0
+set     root            $sharedir/$category/$package/$version
+
+prepend-path    PATH                $root/bin
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    LIBRARY_PATH        $root/lib
+prepend-path    CPATH               $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+prepend-path    MANPATH             $root/man
