@@ -22,7 +22,7 @@ whatis("URL: [https://www3.mrc-lmb.cam.ac.uk/relion](https://www3.mrc-lmb.cam.ac
 load("gnu12/12.5.0")
 load("openmpi5/5.0.8")
 load("fftw3/3.3.10")
-load("fltk/1.3.5")
+load("fltk/1.4.4")
 load("ghostscript/10.06")
 load("libtorch/2.8.0")
 load("ctffind/4.1.14")
