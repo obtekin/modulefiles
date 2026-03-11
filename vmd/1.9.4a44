@@ -1,0 +1,24 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+        puts stderr " "
+        puts stderr "This module loads vmd"
+        puts stderr "\nVersion 2.0.0a8\n"
+
+}
+module-whatis "Name: vmd"
+module-whatis "Version: 1.9.4a44"
+module-whatis "Category: Application"
+module-whatis "Description: Application for visualization and analysis of biological systems such as proteins, nucleic acids, lipid bilayer assemblies"
+module-whatis "URL https://www.ks.uiuc.edu/Research/vmd/"
+
+set     package         vmd
+set     version         1.9.4a44
+set     category        apps
+set     root            /opt/ohpc/pub/$category/$package/$version
+
+
+prepend-path    PATH                $root
+
+module try-load singularity
