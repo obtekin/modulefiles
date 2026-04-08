@@ -1,0 +1,41 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+puts stderr " "
+puts stderr "This module loads the openmpi4 library built with the gnu14 toolchain."
+puts stderr "\nVersion 5.0.8\n"
+
+}
+
+module-whatis "Name: openmpi5 built with gnu14 toolchain"
+module-whatis "Version: 5.0.8"
+module-whatis "Category: runtime library"
+module-whatis "Description: A powerful implementation of MPI"
+module-whatis "URL: http://www.open-mpi.org"
+
+set     version                     5.0.8
+set     package                     openmpi5
+set     category                    mpi
+set     root                        /opt/ohpc/pub/$category/$package/$version
+
+
+setenv          MPI_DIR             $root
+prepend-path    PATH                $root/bin
+prepend-path    MANPATH             $root/share/man
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    LD_RUN_PATH         $root/lib
+prepend-path    CPATH               $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+
+setenv          OMPI_MCA_btl_openib_allow_ib true
+setenv          OMPI_MCA_btl_openib_warn_default_gid_prefix false
+setenv          OMPI_MCA_orte_base_help_aggregate 0
+
+family "MPI"
+
+module try-load hwloc/2.12.1
+module try-load cuda/12.9.1
+module try-load pmix/5.0.8
+module try-load singularity/4.3.2
+module try-load ucx/1.20.0
