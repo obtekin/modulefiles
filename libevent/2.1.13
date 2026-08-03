@@ -1,0 +1,30 @@
+#%Module1.0#####################################################################
+##
+## libevent 2.1.13 modulefile
+##
+
+proc ModulesHelp { } {
+    puts stderr ""
+    puts stderr "This module loads libevent"
+    puts stderr "Version 2.1.13"
+}
+
+module-whatis "Name: libevent"
+module-whatis "Version: 2.1.13"
+module-whatis "Category: Hardware Locality"
+module-whatis "Description: Cross-platform event notification library"
+module-whatis "URL: https://libevent.org"
+
+# Define variables
+set         sharedir        /opt/ohpc/pub
+set         category        libs
+set         package         libevent
+set         version         2.1.13
+set         root            $sharedir/$category/$package/$version
+
+# Update environment paths
+prepend-path    PATH                $root/bin
+prepend-path    LD_LIBRARY_PATH     $root/lib
+prepend-path    CPATH               $root/include
+prepend-path    PKG_CONFIG_PATH     $root/lib/pkgconfig
+prepend-path    MANPATH             $root/man
