@@ -1,0 +1,66 @@
+#%Module1.0#####################################################################
+
+proc ModulesHelp { } {
+
+        puts stderr " "
+        puts stderr "This module loads Lammps 22 July 25 - GPU&CPU"
+        puts stderr "\nVersion 2025-07\n"
+
+}
+module-whatis "Name: Lammps"
+module-whatis "Version: 22July25"
+module-whatis "Category: Application"
+module-whatis "Description: Large-scale Atomic/Molecular Massively Parallel Simulator"
+module-whatis "URL https://www.lammps.org/"
+
+set     package           lammps
+set     version           22July25-gpu
+set     root              /opt/ohpc/pub/apps/$package/$version
+set     stubs_path        /opt/ohpc/pub/compiler/cuda/12.9.1/lib64/stubs
+set     targets_path	  /opt/ohpc/pub/compiler/cuda/12.9.1/targets/x86_64-linux/lib
+
+prepend-path     PATH                $root/bin
+prepend-path     LD_LIBRARY_PATH     $root/lib
+
+prepend-path	  LAMMPS_POTENTIALS   $root/share/lammps/potentials
+prepend-path	  MSI2LMP_LIBRARY     $root/share/lammps/frc_files
+
+#------------------------------------------------------------------------------
+# Detect GPU or libcuda.so availability (at module load time)
+#------------------------------------------------------------------------------
+set gpu_detected 0
+
+# Try nvidia-smi first
+if { [catch {exec nvidia-smi -L} result] == 0 && [string length $result] > 0 } {
+    set gpu_detected 1
+} else {
+    # If nvidia-smi not available, check for libcuda.so in system libs
+    if { [catch {exec ldconfig -p | grep libcuda.so} result] == 0 && [string length $result] > 0 } {
+        set gpu_detected 1
+    }
+    prepend-path LD_LIBRARY_PATH $targets_path
+}
+
+#------------------------------------------------------------------------------
+# Environment setup
+#------------------------------------------------------------------------------
+prepend-path PATH $root/bin
+
+if { $gpu_detected == 0 } {
+    puts stderr "No GPU detected, using CUDA stubs library."
+    prepend-path LD_LIBRARY_PATH $stubs_path:$targets_path
+    setenv OMPI_MCA_opal_cuda_support 0
+    setenv UCX_TLS ^cuda
+} else {
+    puts stderr "GPU detected, using system-installed libcuda.so."
+}
+#------------------------------------------------------------------------------
+# Load dependencies
+#------------------------------------------------------------------------------
+
+module try-add fftw3/3.3.10
+module try-add lapack/3.11.0
+module try-add ffmpeg/6.0
+module try-add conda3/latest
+module try-add openmpi5/5.0.8
+module try-add numactl/2.0.19
