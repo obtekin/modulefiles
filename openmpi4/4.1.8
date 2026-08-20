@@ -18,6 +18,8 @@ set     version                     4.1.8
 set     package                     openmpi4
 set     category                    mpi
 set     root                        /opt/ohpc/pub/$category/$package/$version
+set     stubs_path                  /opt/ohpc/pub/compiler/cuda/12.9.1/lib64/stubs
+set     targets_path                /opt/ohpc/pub/compiler/cuda/12.9.1/targets/x86_64-linux/lib
 
 
 setenv          MPI_DIR             $root
@@ -34,6 +36,37 @@ setenv          OMPI_MCA_orte_base_help_aggregate 0
 setenv          OMPI_MCA_btl_openib_warn_no_device_params_found 0
 family "MPI"
 
+#------------------------------------------------------------------------------
+# Detect GPU or libcuda.so availability (at module load time)
+#------------------------------------------------------------------------------
+set gpu_detected 0
+
+# Try nvidia-smi first
+if { [catch {exec nvidia-smi -L} result] == 0 && [string length $result] > 0 } {
+    set gpu_detected 1
+} else {
+    # If nvidia-smi not available, check for libcuda.so in system libs
+    if { [catch {exec ldconfig -p | grep libcuda.so} result] == 0 && [string length $result] > 0 } {
+        set gpu_detected 1
+    }
+    prepend-path LD_LIBRARY_PATH $targets_path
+}
+
+#------------------------------------------------------------------------------
+# Environment setup
+#------------------------------------------------------------------------------
+if { $gpu_detected == 0 } {
+    puts stderr "No GPU detected, using CUDA stubs library."
+    prepend-path LD_LIBRARY_PATH $stubs_path:$targets_path
+    setenv OMPI_MCA_opal_cuda_support 0
+    setenv UCX_TLS ^cuda
+} else {
+    puts stderr "GPU detected, using system-installed libcuda.so."
+}
+
+#------------------------------------------------------------------------------
+# Load dependencies
+#------------------------------------------------------------------------------
 module try-load hwloc/2.12.1
 module try-load cuda/12.9.1
 module try-load pmix/5.0.8
